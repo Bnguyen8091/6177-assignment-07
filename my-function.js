@@ -1,9 +1,10 @@
-//AWS Lambda (Node.js 20.x)
-export const handler = async (event) => {
-  // works for both direct Lambda URL (queryStringParameters) and raw query (event.rawQueryString)
-  const qs = event?.queryStringParameters || {};
-  let keyword = qs.keyword;
+// my-function.js — AWS Lambda (Node.js 20.x)
+exports.handler = async (event) => {
 
+  // Get keyword from query string
+  let keyword = event?.queryStringParameters?.keyword;
+
+  // Fallback: parse raw query string
   if (!keyword && typeof event?.rawQueryString === "string") {
     const params = new URLSearchParams(event.rawQueryString);
     keyword = params.get("keyword");
@@ -18,3 +19,4 @@ export const handler = async (event) => {
     body: text,
   };
 };
+
